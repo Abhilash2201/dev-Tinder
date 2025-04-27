@@ -1,0 +1,11 @@
+- ep 16
+- Create a repository
+- Initailize the repository
+- node modules, package.json, package-lock.json
+- Install express
+- Create a server
+- listen to port 7777
+- Install nodemon and update scripts inside package.json
+- What are dependencies
+- What is the use of '-g' while npm install
+- Difference between caret and tilde (^ vs -)

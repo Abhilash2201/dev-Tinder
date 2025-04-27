@@ -1,0 +1,19 @@
+{
+  "name": "devtinder-be",
+  "version": "1.0.0",
+  "description": "Tinder for dev",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Abhilash",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
