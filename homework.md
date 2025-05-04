@@ -20,3 +20,7 @@
 - Order of the routes matter a lot \*\*\*
 - Install postman app and make a workspace /collection> test api's
 - Write a logic a handle the GET, POST, PATCH, DELETE API Calls and tehem on Postman
+- Explore routing and use of ?, \*, + in the routes
+- use of regex in the routes /a/ /.\*fly$/
+- Reading the query params in the routes
+- Raeading the dynamic routes
