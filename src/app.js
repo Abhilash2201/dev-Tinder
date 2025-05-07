@@ -13,6 +13,7 @@ const app = express();
 
 // for dynamic route values
 // http://localhost:7777/user?userID=567&password=test
+
 app.get("/user/:userId/:name/:password", (req, res) => {
   console.log(req.params);
   res.send("response from server");
