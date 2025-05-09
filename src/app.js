@@ -1,23 +1,29 @@
 const express = require("express");
 const app = express();
 
-// app.get("/abc?", (req, res) => {
-//   res.send("users data regex");
-// });
+app.use(
+  "/user",
+  (req, res, next) => {
+    console.log("res1");
+    // res.send("response 1");
+    next();
+  },
+  (req, res, next) => {
+    console.log("res2");
+    // res.send("response 2");
+    next();
+  },
+  (req, res, next) => {
+    console.log("res3");
 
-// http://localhost:7777/user?userID=567&password=test
-// app.get("/user", (req, res) => {
-//   console.log(req.query);
-//   res.send("setver response");
-// });
-
-// for dynamic route values
-// http://localhost:7777/user?userID=567&password=test
-
-app.get("/user/:userId/:name/:password", (req, res) => {
-  console.log(req.params);
-  res.send("response from server");
-});
+    // res.send("response 3");
+    next();
+  },
+  (req, res, next) => {
+    // res.send("response 4");
+    next();
+  }
+);
 
 app.listen(7777, () => {
   console.log("server is running succesfullysss 7777");
