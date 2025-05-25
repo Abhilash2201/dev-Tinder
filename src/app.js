@@ -1,41 +1,29 @@
 const express = require("express");
 const app = express();
-
-// app.use(
-//   "/user",
-//   (req, res, next) => {
-//     console.log("res1");
-//     // res.send("response 1");
-//     next();
-//   },
-//   (req, res, next) => {
-//     console.log("res2");
-//     // res.send("response 2");
-//     next();
-//   },
-//   (req, res, next) => {
-//     console.log("res3");
-
-//     // res.send("response 3");
-//     next();
-//   },
-//   (req, res, next) => {
-//     // res.send("response 4");
-//     next();
-//   }
-// );
-
-app.get("/getUserData", (req, res) => {
-  try {
-    throw new Error("some error");
-    // the below will never execute
-    res.send("some error");
-  } catch (error) {
-    console.log(error);
-    // res.send(error);
-    res.status(500).send({ err: error.message });
-  }
+const connectDB = require("./config/database");
+const User = require("./models/user");
+// api for signup
+app.post("/signup", async (req, res) => {
+  const user = new User({
+    firstName: "Mahesh",
+    lastName: "Kumar",
+    emailId: "maheshkumar@gmail.com",
+    password: "mahesh@123",
+    age: "20",
+    gender: "male",
+  });
+  // mongoose fnc to save the data to DB returns Promise so async
+  await user.save();
+  res.send("user added successsful");
 });
-app.listen(7777, () => {
-  console.log("server is running succesfullysss 7777");
-});
+
+connectDB()
+  .then(() => {
+    console.log("DB connection Successful");
+    app.listen(7777, () => {
+      console.log("Server is listening to PORT 7777");
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
