@@ -44,5 +44,9 @@
 - Call the connectDB function and connect to database before starting application on 7777
 - Create a userschema and user Model
 - Create a POST api /signup that add the data to DB
-- Push some sample data to the DB by calling the api
+- Push some sample documents to the DB by calling the api
 - Error handling using try , catch
+
+- JSON vs Js Object(difference)
+- Add the express.json middleware to your app
+- Make your signup API dynamic to receive the data from the end user

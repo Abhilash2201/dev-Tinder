@@ -3,18 +3,12 @@ const app = express();
 const connectDB = require("./config/database");
 const User = require("./models/user");
 // api for signup
+app.use(express.json());
 app.post("/signup", async (req, res) => {
-  const user = new User({
-    firstName: "Mahesh",
-    lastName: "Kumar",
-    emailId: "maheshkumar@gmail.com",
-    password: "mahesh@123",
-    age: "20",
-    gender: "male",
-  });
+  const user = new User(req.body);
   // mongoose fnc to save the data to DB returns Promise so async
   await user.save();
-  res.send("user added successsful");
+  res.send("user added sucessful");
 });
 
 connectDB()
