@@ -28,10 +28,31 @@ app.get("/user", async (req, res) => {
   console.log(req.body.emailId);
 
   try {
-    const users = await U  ser.find({ emailId: req.body.emailId });
+    const users = await User.find({ emailId: req.body.emailId });
     res.send(users);
   } catch (err) {
     res.status(400).send("Something went wrong");
+  }
+});
+
+app.delete("/user", async (req, res) => {
+  const id = req.body.userId;
+  try {
+    const result = await User.findByIdAndDelete(id);
+    res.send("user deleted successfully", result.firstName);
+  } catch (err) {
+    res.status(400).send("something went wrong");
+  }
+});
+
+app.patch("/user", async (req, res) => {
+  const id = req.body.userId;
+  const updatedData = req.body;
+  try {
+    await User.findByIdAndUpdate(id, updatedData);
+    res.send("user updated successfully");
+  } catch (err) {
+    res.status(400).send("something went wrong");
   }
 });
 
