@@ -47,16 +47,42 @@ app.delete("/user", async (req, res) => {
   }
 });
 
-app.patch("/user", async (req, res) => {
-  const id = req.body.userId;
+// app.patch("/user", async (req, res) => {
+//   const id = req.body.userId;
+//   const updatedData = req.body;
+//   try {
+//     const user = await User.findByIdAndUpdate(id, updatedData, {
+//       runValidators: true,
+//     });
+//     res.send("user updated successfully" + user);
+//   } catch (err) {
+//     res.status(400).send("something went wrong" + err);
+//   }
+// });
+
+app.patch("/user/:userId", async (req, res) => {
+  const id = req.params?.userId;
   const updatedData = req.body;
   try {
+    const ALLOWED_KEYS = [
+      "userId",
+      "firstName",
+      "gender",
+      "lastName",
+      "skills",
+    ];
+    const isUpdateAllowed = Object.keys(updatedData).every((item) =>
+      ALLOWED_KEYS.includes(item)
+    );
+    if (!isUpdateAllowed) {
+      throw new Error(" update allowed only to these keys " + ALLOWED_KEYS);
+    }
     const user = await User.findByIdAndUpdate(id, updatedData, {
       runValidators: true,
     });
     res.send("user updated successfully" + user);
   } catch (err) {
-    res.status(400).send("something went wrong" + err);
+    res.status(400).send("Something went wrong " + err);
   }
 });
 
