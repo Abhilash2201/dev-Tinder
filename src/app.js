@@ -9,9 +9,9 @@ app.post("/signup", async (req, res) => {
   // mongoose fnc to save the data to DB returns Promise so async
   try {
     await user.save();
-    res.send("user added sucessful");
+    res.send("user added sucessful " + user);
   } catch (err) {
-    res.status(400).send("Something went wrong");
+    res.status(400).send("Something went wrong  " + err);
   }
 });
 // api to fetch allUser
@@ -39,9 +39,11 @@ app.delete("/user", async (req, res) => {
   const id = req.body.userId;
   try {
     const result = await User.findByIdAndDelete(id);
-    res.send("user deleted successfully", result.firstName);
+    res.send(
+      "user deleted successfully " + result.firstName + ` ${result.emailId}`
+    );
   } catch (err) {
-    res.status(400).send("something went wrong");
+    res.status(400).send("something went wrong" + err);
   }
 });
 
@@ -49,10 +51,12 @@ app.patch("/user", async (req, res) => {
   const id = req.body.userId;
   const updatedData = req.body;
   try {
-    await User.findByIdAndUpdate(id, updatedData);
-    res.send("user updated successfully");
+    const user = await User.findByIdAndUpdate(id, updatedData, {
+      runValidators: true,
+    });
+    res.send("user updated successfully" + user);
   } catch (err) {
-    res.status(400).send("something went wrong");
+    res.status(400).send("something went wrong" + err);
   }
 });
 
