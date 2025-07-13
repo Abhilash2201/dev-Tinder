@@ -71,3 +71,12 @@
 - Add timeStamps to userSchema
 - add API level validations on Patch request & SignUp post API
 - Data Sanitizing -Add API validations for each field
+- install validator
+- use and explore the validator fncs
+- Never trust req.body
+
+- Validate data in Signup API
+- Install bcrypt -package
+- Create Password Hash using bcrypt hash & save the user is excrypted password
+- Create login API
+- Compare passwords and throw error if email or password is invalid
