@@ -3,9 +3,13 @@ const bcrypt = require("bcrypt");
 const app = express();
 const connectDB = require("./config/database");
 const User = require("./models/user");
+var jwt = require("jsonwebtoken");
+var cookieParser = require("cookie-parser");
 const validateSignupData = require("./utils/validate");
-// api for signup
+// middleware to parse
 app.use(express.json());
+app.use(cookieParser());
+// api for signup
 app.post("/signup", async (req, res) => {
   try {
     // Validation of data
@@ -39,15 +43,42 @@ app.post("/login", async (req, res) => {
     if (!user) {
       throw new Error("Invalid User");
     }
+
     const IsValidPassword = await bcrypt.compare(password, user.password);
-    if (!IsValidPassword) {
+    if (IsValidPassword) {
+      // Create a JWT Token
+      const token = await jwt.sign({ _id: user._id }, "DEV@TINDER4790");
+      // Add the token to the cookie and send the response back to the cookie
+      res.cookie("token", token);
+      res.send("Login Successfull");
+    } else {
       throw new Error("Invalid password");
     }
-    res.send("Login Successfull");
   } catch (err) {
     res.status(400).send("Somethng went wrong : " + err.message);
   }
 });
+
+// api to fetch profile with cookie implementeation
+app.get("/profile", async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    const { token } = cookies;
+    if (!token) {
+      throw new Error("Invalid token");
+    }
+    const decodedMessage = await jwt.verify(token, "DEV@TINDER4790");
+    const { _id } = decodedMessage;
+    const user = await User.findById(_id);
+    if (!user) {
+      throw new Error("User not exists");
+    }
+    res.send(user);
+  } catch (err) {
+    res.status(400).send("Somethng went wrong : " + err.message);
+  }
+});
+
 // api to fetch allUser
 app.get("/feed", async (req, res) => {
   try {
